@@ -16,7 +16,7 @@ export default async function HomePage() {
   return (
     <main className="container mx-auto p-8">
       <h1 className="text-4xl font-bold mb-4">ClearPath Roadmap</h1>
-      <pre>{JSON.stringify(roadmapItems, null, 2)}</pre>
+   
       {roadmapItems.items && roadmapItems.items.length > 0 ? (
         roadmapItems.items.map((item) => (
           <FeatureCard
