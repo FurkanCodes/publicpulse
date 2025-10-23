@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1761217549852,
+      "tag": "0000_panoramic_namora",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1761218195821,
+      "tag": "0001_petite_ben_parker",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1761219476771,
+      "tag": "0002_right_junta",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1761219712232,
+      "tag": "0003_closed_misty_knight",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,4 +1,6 @@
-import { createClient } from "@/db/supabase/server";
+import { db } from "@/db";
+import { roadmapItems } from "@/db/schema";
+
 
 // /workspaces/publicpulse/data-access/fetch-roadmaps-items.tsx
 export type RoadmapItem = {
@@ -18,13 +20,9 @@ type FetchResult = {
  * Fetch roadmap_items from Supabase using the Fetch API (PostgREST).
  */
 export default async function fetchRoadmapItems(): Promise<FetchResult> {
-    const supabase = await createClient();
-
-  const { data: items, error } = await supabase.from('roadmap_items').select('*')
-
-    if (error) {
-        return { items: null, error: error.message };
-    }
-
-    return { items, error: null };  
+  const result = await db.select().from(roadmapItems)
+  return {
+    items: result,
+    error: null,
+  };    
 }
