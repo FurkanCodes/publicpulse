@@ -1,0 +1,2 @@
+ALTER TABLE "roadmap_items"
+ADD COLUMN "company_id" TEXT NOT NULL REFERENCES "user"("id") ON DELETE CASCADE;

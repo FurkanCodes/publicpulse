@@ -1,29 +1,48 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { ArrowUpIcon, MessageSquareIcon, ClockIcon, Sparkles, CheckCircle2Icon, type LucideIcon } from "lucide-react"
-import { useState } from "react"
+import { useMemo, useState } from "react";
+import { useAction } from "next-safe-action/hooks";
+import { toast } from "sonner";
+import {
+  ArrowUpIcon,
+  CheckCircle2Icon,
+  ClockIcon,
+  Sparkles,
+  type LucideIcon,
+} from "lucide-react";
 
-type FeatureStatus = "planned" | "in_progress" | "completed"
+import { upvoteFeatureAction } from "@/app/actions/upvote-feature";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
+type FeatureStatus = "planned" | "in_progress" | "completed";
 
 interface FeatureCardProps {
-  title: string
-  description: string
-  status: FeatureStatus
-  votes: number
-  comments: number
-  postedDate: string
-  onVote?: () => void
+  feature: {
+    id: number;
+    title: string;
+    description?: string | null;
+    status?: string | null;
+    upvotes?: number | null;
+    createdAt?: Date | string | null;
+  };
+  slug?: string;
+  disableVoting?: boolean;
 }
 
 const statusConfig: Record<
   FeatureStatus,
   {
-    label: string
-    icon: LucideIcon
-    className: string
+    label: string;
+    icon: LucideIcon;
+    className: string;
   }
 > = {
   planned: {
@@ -31,7 +50,7 @@ const statusConfig: Record<
     icon: ClockIcon,
     className: "border-status-planned text-status-planned",
   },
-  "in_progress": {
+  in_progress: {
     label: "In Progress",
     icon: Sparkles,
     className: "border-status-progress text-status-progress",
@@ -41,68 +60,102 @@ const statusConfig: Record<
     icon: CheckCircle2Icon,
     className: "border-status-completed text-status-completed",
   },
-}
+};
 
-export function FeatureCard({
-  title,
-  description,
-  status,
-  votes: initialVotes,
-  comments,
-  postedDate,
-  onVote,
-}: FeatureCardProps) {
-  const [votes, setVotes] = useState(initialVotes)
-  const [hasVoted, setHasVoted] = useState(false)
+export function FeatureCard({ feature, slug, disableVoting }: FeatureCardProps) {
+  const [votes, setVotes] = useState(feature.upvotes ?? 0);
+  const [hasVoted, setHasVoted] = useState(false);
 
-  const config = statusConfig[status]
-  console.log("Status config:", config)
-  const StatusIcon = config.icon
+  const statusKey = (feature.status ?? "planned").toLowerCase() as FeatureStatus;
+  const config =
+    statusConfig[statusKey] ?? {
+      label: feature.status ?? "Planned",
+      icon: Sparkles,
+      className: "border-status-planned text-status-planned",
+    };
+  const StatusIcon = config.icon;
+
+  const createdLabel = useMemo(() => {
+    if (!feature.createdAt) return null;
+
+    try {
+      const date = new Date(feature.createdAt);
+      return new Intl.DateTimeFormat(undefined, {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      }).format(date);
+    } catch {
+      return null;
+    }
+  }, [feature.createdAt]);
+
+  const { execute, status } = useAction(upvoteFeatureAction, {
+    onSuccess({ data }) {
+      if (typeof data?.upvotes === "number") {
+        setVotes(data.upvotes);
+      }
+    },
+    onError({ error }) {
+      setVotes((prev) => Math.max(prev - 1, 0));
+      setHasVoted(false);
+      const message =
+        error?.serverError ??
+        error?.thrownError?.message ??
+        "We couldn’t register your upvote.";
+      toast.error(message);
+    },
+  });
 
   const handleVote = () => {
-    if (!hasVoted) {
-      setVotes((prev) => prev + 1)
-      setHasVoted(true)
-      onVote?.()
+    if (disableVoting || hasVoted || status === "executing") {
+      return;
     }
-  }
+
+    setHasVoted(true);
+    setVotes((prev) => prev + 1);
+    execute({
+      featureId: feature.id,
+      slug,
+    });
+  };
 
   return (
-    <Card className="hover:border-primary/50 transition-colors">
+    <Card className="transition-colors hover:border-primary/50">
       <CardHeader>
         <div className="flex items-start justify-between gap-4">
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-2">
-              <Badge variant="outline" className={config.className}>
-                <StatusIcon className="w-3 h-3 mr-1" />
-                {config.label}
-              </Badge>
-            </div>
-            <CardTitle className="text-xl">{title}</CardTitle>
-            <CardDescription className="mt-2">{description}</CardDescription>
+          <div className="flex-1 space-y-2">
+            <Badge variant="outline" className={config.className}>
+              <StatusIcon className="mr-1 h-3 w-3" aria-hidden />
+              {config.label}
+            </Badge>
+            <CardTitle className="text-xl">{feature.title}</CardTitle>
+            {feature.description ? (
+              <CardDescription className="text-sm text-muted-foreground">
+                {feature.description}
+              </CardDescription>
+            ) : null}
           </div>
           <Button
             variant="outline"
             size="sm"
-            className="flex-col h-auto py-2 px-3 gap-1 bg-transparent"
+            className="flex h-auto flex-col gap-1 bg-transparent px-3 py-2"
             onClick={handleVote}
-            disabled={hasVoted}
+            disabled={disableVoting || hasVoted || status === "executing"}
+            aria-label="Upvote feature"
           >
-            <ArrowUpIcon className="w-4 h-4" />
+            <ArrowUpIcon className="h-4 w-4" aria-hidden />
             <span className="text-xs font-semibold">{votes}</span>
           </Button>
         </div>
       </CardHeader>
-      <CardContent>
-        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1">
-            <MessageSquareIcon className="w-4 h-4" />
-            <span>{comments} comments</span>
-          </div>
-          <span>•</span>
-          <span>{postedDate}</span>
-        </div>
-      </CardContent>
+      {createdLabel ? (
+        <CardContent>
+          <p className="text-sm text-muted-foreground">
+            Posted {createdLabel}
+          </p>
+        </CardContent>
+      ) : null}
     </Card>
-  )
+  );
 }
