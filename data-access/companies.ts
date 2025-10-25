@@ -6,8 +6,13 @@ import { db } from "@/db";
 import {
   companies,
   companyMembers,
+  companySettings,
   type SelectCompany,
 } from "@/db/schema";
+import {
+  assertWithinPlanLimit,
+  ensureUserPlan,
+} from "@/data-access/plans";
 import { isUniqueViolation } from "@/lib/sql-errors";
 
 type UserIdentity = {
@@ -18,11 +23,24 @@ type UserIdentity = {
 
 export async function ensureCompanyForUser(
   user: UserIdentity,
+  preferredCompanyId?: string,
 ): Promise<SelectCompany> {
+  const plan = await ensureUserPlan(user.id);
+
+  if (preferredCompanyId) {
+    const preferred = await findOwnedCompany(user.id, preferredCompanyId);
+    if (preferred) {
+      return preferred;
+    }
+  }
+
   const ownedCompany = await findOwnedCompany(user.id);
   if (ownedCompany) {
     return ownedCompany;
   }
+
+  const ownedCount = await countOwnedCompanies(user.id);
+  assertWithinPlanLimit(plan, ownedCount, plan.companyLimit, "company");
 
   const name =
     user.name?.trim() || user.email?.split("@")[0] || "Workspace";
@@ -47,6 +65,13 @@ export async function ensureCompanyForUser(
           companyId: company.id,
           userId: user.id,
           role: "owner",
+        })
+        .onConflictDoNothing();
+
+      await db
+        .insert(companySettings)
+        .values({
+          companyId: company.id,
         })
         .onConflictDoNothing();
 
@@ -136,21 +161,115 @@ async function generateUniqueCompanySlug(base: string): Promise<string> {
 
 async function findOwnedCompany(
   userId: string,
+  companyId?: string,
 ): Promise<SelectCompany | undefined> {
+  const conditions = [
+    eq(companyMembers.userId, userId),
+    eq(companyMembers.role, "owner"),
+  ];
+
+  if (companyId) {
+    conditions.push(eq(companies.id, companyId));
+  }
+
   const result = await db
     .select({ company: companies })
     .from(companyMembers)
-    .innerJoin(
-      companies,
-      eq(companyMembers.companyId, companies.id),
-    )
+    .innerJoin(companies, eq(companyMembers.companyId, companies.id))
+    .where(and(...conditions))
+    .limit(1);
+
+  return result[0]?.company;
+}
+
+export async function countOwnedCompanies(
+  userId: string,
+): Promise<number> {
+  const rows = await db
+    .select({ companyId: companyMembers.companyId })
+    .from(companyMembers)
     .where(
       and(
         eq(companyMembers.userId, userId),
         eq(companyMembers.role, "owner"),
       ),
-    )
-    .limit(1);
+    );
 
-  return result[0]?.company;
+  const uniqueCompanyIds = new Set(rows.map((row) => row.companyId));
+  return uniqueCompanyIds.size;
+}
+
+type CreateCompanyInput = {
+  name: string;
+  description?: string | null;
+};
+
+export async function createCompanyForUser(
+  user: UserIdentity,
+  input: CreateCompanyInput,
+) {
+  const plan = await ensureUserPlan(user.id);
+
+  const usageBefore = await countOwnedCompanies(user.id);
+  assertWithinPlanLimit(plan, usageBefore, plan.companyLimit, "company");
+
+  const baseName =
+    input.name.trim() ||
+    user.name?.trim() ||
+    user.email?.split("@")[0] ||
+    "Workspace";
+
+  let lastError: unknown;
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const slug = await generateUniqueCompanySlug(baseName);
+
+    try {
+      const [company] = await db
+        .insert(companies)
+        .values({
+          name: baseName,
+          slug,
+          description: input.description ?? null,
+          ownerUserId: user.id,
+        })
+        .returning();
+
+      await db
+        .insert(companyMembers)
+        .values({
+          companyId: company.id,
+          userId: user.id,
+          role: "owner",
+        })
+        .onConflictDoNothing();
+
+      await db
+        .insert(companySettings)
+        .values({
+          companyId: company.id,
+        })
+        .onConflictDoNothing();
+
+      return {
+        company,
+        plan,
+        usage: {
+          companiesUsed: usageBefore + 1,
+          companyLimit: plan.companyLimit,
+        },
+      };
+    } catch (error) {
+      lastError = error;
+
+      if (isUniqueViolation(error)) {
+        continue;
+      }
+
+      throw error;
+    }
+  }
+
+  throw lastError instanceof Error
+    ? lastError
+    : new Error("Unable to create company");
 }

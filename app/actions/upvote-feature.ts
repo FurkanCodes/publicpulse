@@ -33,7 +33,7 @@ export const upvoteFeatureAction = actionClient
 
     const cookieStore = await cookies();
 
-    let voterUserId = session?.user.id ?? null;
+    const voterUserId = session?.user.id ?? null;
     let voterAnonymousId: string | null = null;
 
     if (!voterUserId) {

@@ -153,8 +153,8 @@ export default function SignUp() {
           Create your account
         </CardTitle>
         <CardDescription className="text-sm text-muted-foreground">
-          Start exploring ClearPath with a quick sign up. We just need a few
-          details to get you moving.
+          Ready to create a workspace or join a board as a contributor? Sign up once, then either launch a new
+          product workspace or sign in on a public board to leave suggestions.
         </CardDescription>
       </CardHeader>
       <CardContent>
