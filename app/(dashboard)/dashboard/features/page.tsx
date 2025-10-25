@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 import { CreateFeatureForm } from "@/components/dashboard/create-feature-form";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
@@ -31,11 +31,17 @@ export default async function DashboardFeaturesPage() {
     );
   }
 
-  const company = await ensureCompanyForUser({
-    id: session.user.id,
-    name: session.user.name,
-    email: session.user.email,
-  });
+  const cookieStore = cookies();
+  const preferredWorkspaceId = (await cookieStore).get("selected_workspace_id")?.value;
+
+  const company = await ensureCompanyForUser(
+    {
+      id: session.user.id,
+      name: session.user.name,
+      email: session.user.email,
+    },
+    preferredWorkspaceId,
+  );
 
   const features = await fetchRoadmapItemsForCompany(company.id);
 

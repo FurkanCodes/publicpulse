@@ -35,7 +35,7 @@ export function DashboardNav({ items }: DashboardNavProps) {
   const segments = useSelectedLayoutSegments();
 
   return (
-    <nav className="space-y-1">
+    <nav className="flex flex-wrap items-center gap-2">
       {items.map((item) => {
         const Icon = iconMap[item.icon];
 
@@ -48,13 +48,16 @@ export function DashboardNav({ items }: DashboardNavProps) {
             key={item.name}
             href={item.href}
             className={cn(
-              "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
-              "text-muted-foreground hover:bg-primary/10 hover:text-foreground",
-              isActive && "bg-primary/10 text-primary",
+              "flex items-center gap-2 rounded-full border border-transparent px-4 py-2 text-sm font-semibold tracking-tight text-muted-foreground transition-all duration-200 ease-out",
+              "hover:-translate-y-[2px] hover:border-[color:var(--outline-strong)] hover:bg-[var(--highlight)] hover:text-foreground",
+              isActive &&
+                "border-[color:var(--outline-strong)] bg-primary text-primary-foreground shadow-[0_8px_0_var(--shadow-color)]",
             )}
             aria-current={isActive ? "page" : undefined}
           >
-            <Icon className="h-4 w-4" aria-hidden />
+            <span className="inline-flex size-6 items-center justify-center rounded-full border border-[color:var(--outline-strong)] bg-[color:var(--surface-elevated)] text-[0.7rem] font-semibold uppercase leading-none text-foreground">
+              <Icon className="h-3.5 w-3.5" aria-hidden />
+            </span>
             <span>{item.name}</span>
           </Link>
         );

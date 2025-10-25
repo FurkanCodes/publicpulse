@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 import { authenticatedAction } from "@/lib/safe-action";
 import { ensureCompanyForUser } from "@/data-access/companies";
@@ -13,11 +14,16 @@ export const createFeatureAction = authenticatedAction
   .action(async ({ parsedInput, ctx }) => {
     const { title, description } = parsedInput;
 
-    const company = await ensureCompanyForUser({
-      id: ctx.session.user.id,
-      name: ctx.session.user.name,
-      email: ctx.session.user.email,
-    });
+    const preferredWorkspaceId = (await cookies()).get("selected_workspace_id")?.value;
+
+    const company = await ensureCompanyForUser(
+      {
+        id: ctx.session.user.id,
+        name: ctx.session.user.name,
+        email: ctx.session.user.email,
+      },
+      preferredWorkspaceId,
+    );
 
     const feature = await createRoadmapItem({
       title,

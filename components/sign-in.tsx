@@ -105,7 +105,7 @@ export default function SignIn() {
           Welcome back
         </CardTitle>
         <CardDescription className="text-sm text-muted-foreground">
-          Sign in to access your roadmap, feedback inbox, and launch history.
+          Continue managing your workspace or contribute to boards that require sign-in for suggestions.
         </CardDescription>
       </CardHeader>
       <CardContent>
