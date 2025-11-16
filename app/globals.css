@@ -38,6 +38,40 @@
   --gradient-base: rgba(253, 251, 247, 1);
   --gradient-mid: rgba(237, 229, 255, 0.72);
   --gradient-glow: rgba(223, 207, 255, 0.65);
+  /* Core brand palette */
+  --primary: #c4b1ff;
+  --primary-foreground: #1a142f;
+  --accent: #f8d85c;
+  --accent-foreground: #1f1600;
+  --accent-blue: #8abaff;
+  --accent-cyan: #91e0c8;
+
+  /* Surface system */
+  --surface-base: #fdfbf7;
+  --surface-subtle: #f6f1ff;
+  --surface-elevated: #ffffff;
+  --surface-floating: #efe9ff;
+  --surface-muted: #f3f0ff;
+  --surface-inverse: #1a132f;
+
+  /* Typography system */
+  --text-primary: #1c1633;
+  --text-secondary: #5a5673;
+  --text-tertiary: #837da0;
+
+  /* Structure */
+  --outline-soft: rgba(42, 29, 72, 0.12);
+  --outline-strong: rgba(20, 12, 36, 0.82);
+  --shadow-color: rgba(26, 17, 48, 0.08);
+  --shadow-strong: rgba(26, 17, 48, 0.14);
+  --grid-divider: rgba(31, 21, 58, 0.16);
+  --header-surface: rgba(253, 251, 247, 0.9);
+  --header-border: rgba(42, 29, 72, 0.16);
+
+  /* Glow gradients */
+  --gradient-base: rgba(253, 251, 247, 1);
+  --gradient-mid: rgba(237, 229, 255, 0.72);
+  --gradient-glow: rgba(223, 207, 255, 0.65);
 
   /* Highlight layers */
   --highlight: var(--surface-floating);
@@ -47,7 +81,46 @@
   --status-planned: #a985ff;
   --status-progress: #f2c343;
   --status-completed: #5fcea8;
+  /* Highlight layers */
+  --highlight: var(--surface-floating);
+  --highlight-strong: #e7dcff;
 
+  /* Status palette */
+  --status-planned: #a985ff;
+  --status-progress: #f2c343;
+  --status-completed: #5fcea8;
+
+  /* Derived tokens */
+  --background: var(--surface-base);
+  --foreground: var(--text-primary);
+  --card: var(--surface-elevated);
+  --card-foreground: var(--text-primary);
+  --popover: var(--surface-elevated);
+  --popover-foreground: var(--text-primary);
+  --secondary: var(--surface-subtle);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--surface-muted);
+  --muted-foreground: var(--text-secondary);
+  --destructive: #f2584c;
+  --destructive-foreground: #ffffff;
+  --border: var(--outline-soft);
+  --border-strong: var(--outline-strong);
+  --input: var(--outline-soft);
+  --ring: #cbb8ff;
+  --chart-1: #1c1633;
+  --chart-2: #f8d85c;
+  --chart-3: #79cffc;
+  --chart-4: #f7abd0;
+  --chart-5: #8edcc3;
+  --radius: 1.5rem;
+  --sidebar: var(--surface-elevated);
+  --sidebar-foreground: var(--text-primary);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--surface-floating);
+  --sidebar-accent-foreground: var(--text-primary);
+  --sidebar-border: var(--outline-soft);
+  --sidebar-ring: #cbb8ff;
   /* Derived tokens */
   --background: var(--surface-base);
   --foreground: var(--text-primary);
@@ -148,9 +221,77 @@
   --sidebar-accent-foreground: var(--text-primary);
   --sidebar-border: var(--outline-soft);
   --sidebar-ring: #9f8ef5;
+  --primary: #b29cff;
+  --primary-foreground: #120d1f;
+  --accent: #d6b954;
+  --accent-foreground: #120d1f;
+  --accent-blue: #76b5ff;
+  --accent-cyan: #70d6b5;
+
+  --surface-base: #0c0718;
+  --surface-subtle: #16122a;
+  --surface-elevated: #201a36;
+  --surface-floating: #2a2143;
+  --surface-muted: #2f2750;
+  --surface-inverse: #fdfbf7;
+
+  --text-primary: #f7f4ff;
+  --text-secondary: #c6bee3;
+  --text-tertiary: #9189b6;
+
+  --outline-soft: rgba(203, 191, 255, 0.18);
+  --outline-strong: rgba(203, 191, 255, 0.32);
+  --shadow-color: rgba(4, 2, 12, 0.6);
+  --shadow-strong: rgba(10, 6, 22, 0.7);
+  --grid-divider: rgba(203, 191, 255, 0.16);
+  --header-surface: rgba(12, 7, 24, 0.92);
+  --header-border: rgba(203, 191, 255, 0.2);
+
+  --gradient-base: rgba(12, 7, 24, 1);
+  --gradient-mid: rgba(33, 25, 57, 0.92);
+  --gradient-glow: rgba(59, 38, 98, 0.8);
+
+  --highlight: rgba(45, 34, 70, 0.85);
+  --highlight-strong: rgba(59, 42, 90, 0.9);
+
+  --status-planned: #a786ff;
+  --status-progress: #d9b44a;
+  --status-completed: #5abfa1;
+
+  --background: var(--surface-base);
+  --foreground: var(--text-primary);
+  --card: var(--surface-elevated);
+  --card-foreground: var(--text-primary);
+  --popover: var(--surface-elevated);
+  --popover-foreground: var(--text-primary);
+  --secondary: var(--surface-subtle);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--surface-muted);
+  --muted-foreground: var(--text-secondary);
+  --destructive: #ff7a6f;
+  --destructive-foreground: #120d1f;
+  --border: var(--outline-soft);
+  --border-strong: var(--outline-strong);
+  --input: var(--outline-soft);
+  --ring: #9f8ef5;
+  --chart-1: #f7f4ff;
+  --chart-2: #d6b954;
+  --chart-3: #7bd0ff;
+  --chart-4: #f4a5c7;
+  --chart-5: #84d1b5;
+  --sidebar: var(--surface-subtle);
+  --sidebar-foreground: var(--text-primary);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: rgba(45, 34, 70, 0.85);
+  --sidebar-accent-foreground: var(--text-primary);
+  --sidebar-border: var(--outline-soft);
+  --sidebar-ring: #9f8ef5;
 }
 
 @theme inline {
+  --font-sans: var(--font-plus-jakarta), "Plus Jakarta Sans", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-sans: var(--font-plus-jakarta), "Plus Jakarta Sans", -apple-system,
     BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "Geist Mono", "Geist Mono Fallback";
@@ -218,6 +359,27 @@
   --gradient-color-glow: var(--gradient-glow);
   --color-header-surface: var(--header-surface);
   --color-header-border: var(--header-border);
+  --color-surface-base: var(--surface-base);
+  --color-surface-subtle: var(--surface-subtle);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-floating: var(--surface-floating);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-inverse: var(--surface-inverse);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-outline-soft: var(--outline-soft);
+  --color-outline-strong: var(--outline-strong);
+  --color-shadow: var(--shadow-color);
+  --color-shadow-strong: var(--shadow-strong);
+  --color-highlight: var(--highlight);
+  --color-highlight-strong: var(--highlight-strong);
+  --color-grid-divider: var(--grid-divider);
+  --gradient-color-base: var(--gradient-base);
+  --gradient-color-mid: var(--gradient-mid);
+  --gradient-color-glow: var(--gradient-glow);
+  --color-header-surface: var(--header-surface);
+  --color-header-border: var(--header-border);
 }
 
 @layer base {
@@ -243,6 +405,7 @@
   }
 }
 
+/* Custom utility classes for PublicPulse */
 /* Custom utility classes for PublicPulse */
 @layer utilities {
   .text-status-planned {

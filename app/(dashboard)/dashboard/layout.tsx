@@ -1,17 +1,24 @@
 import type { ReactNode } from "react";
 import { cookies, headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { Sparkles } from "lucide-react";
 
 import { auth } from "@/lib/auth";
 import Link from "next/link";
 
+import Link from "next/link";
+
 import { ensureCompanyForUser } from "@/data-access/companies";
+import { listOwnedWorkspaces } from "@/data-access/companies-list";
+import { getPlanUsageForUser } from "@/data-access/plans";
 import { listOwnedWorkspaces } from "@/data-access/companies-list";
 import { getPlanUsageForUser } from "@/data-access/plans";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { DashboardNav, NavItem } from "@/components/dashboard/dashboard-nav";
+import { SignOutButton } from "@/components/sign-out-button";
+import { WorkspaceSwitcher } from "@/components/dashboard/workspace-switcher";
 import { SignOutButton } from "@/components/sign-out-button";
 import { WorkspaceSwitcher } from "@/components/dashboard/workspace-switcher";
 
@@ -46,7 +53,36 @@ export default async function DashboardLayout({
     },
     cookieWorkspaceId,
   );
+  const cookieStore = cookies();
+  const cookieWorkspaceId = (await cookieStore).get("selected_workspace_id")?.value;
+  const company = await ensureCompanyForUser(
+    {
+      id: session.user.id,
+      name: session.user.name,
+      email: session.user.email,
+    },
+    cookieWorkspaceId,
+  );
 
+  const workspaces = await listOwnedWorkspaces(session.user.id);
+  const activeWorkspaceId = company.id;
+  const activeWorkspace = workspaces.find((workspace) => workspace.id === activeWorkspaceId) ?? {
+    id: company.id,
+    name: company.name,
+    slug: company.slug,
+    createdAt: company.createdAt,
+  };
+
+  const displayName = activeWorkspace.name;
+  const { plan, usage } = await getPlanUsageForUser(session.user.id);
+  const companyLimitLabel =
+    usage.companyLimit === null
+      ? "Unlimited workspaces"
+      : `${usage.companiesUsed}/${usage.companyLimit} workspaces`;
+  const remainingLabel =
+    usage.companiesRemaining === null
+      ? "Unlimited remaining"
+      : `${usage.companiesRemaining} remaining`;
   const workspaces = await listOwnedWorkspaces(session.user.id);
   const activeWorkspaceId = company.id;
   const activeWorkspace = workspaces.find((workspace) => workspace.id === activeWorkspaceId) ?? {
@@ -109,7 +145,14 @@ export default async function DashboardLayout({
               </div>
               <div className="flex items-center justify-start gap-3 md:justify-end">
                 <WorkspaceSwitcher workspaces={workspaces} activeWorkspaceId={activeWorkspaceId} />
+              <div className="flex items-center justify-start gap-3 md:justify-end">
+                <WorkspaceSwitcher workspaces={workspaces} activeWorkspaceId={activeWorkspaceId} />
                 <ThemeToggle />
+                <SignOutButton variant="outline" size="sm">
+                  Sign out
+                </SignOutButton>
+                <Button size="default" className="gap-2" asChild>
+                  <Link href="/dashboard/features" className="flex items-center gap-2">
                 <SignOutButton variant="outline" size="sm">
                   Sign out
                 </SignOutButton>
@@ -119,6 +162,18 @@ export default async function DashboardLayout({
                     New feature
                   </Link>
                 </Button>
+              </div>
+            </div>
+            <div className="rounded-full border border-[color:var(--outline-soft)] bg-[color:var(--surface-floating)] px-4 py-3 shadow-[0_8px_0_var(--shadow-color)]">
+              <DashboardNav items={navigation} />
+            </div>
+          </div>
+        </header>
+        <main className="flex-1">
+          <div className="mx-auto w-full max-w-[1200px] px-6 py-12 lg:py-14">
+            {children}
+          </div>
+        </main>
               </div>
             </div>
             <div className="rounded-full border border-[color:var(--outline-soft)] bg-[color:var(--surface-floating)] px-4 py-3 shadow-[0_8px_0_var(--shadow-color)]">
