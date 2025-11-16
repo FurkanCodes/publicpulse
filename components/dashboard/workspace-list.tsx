@@ -58,7 +58,7 @@ export function WorkspaceList({ workspaces }: WorkspaceListProps) {
                   </Link>
                 </Button>
                 <Button variant="outline" size="sm" asChild>
-                  <Link href="/dashboard">
+                  <Link href="/dashboard/overview">
                     <ExternalLink className="h-4 w-4" aria-hidden /> Open dashboard
                   </Link>
                 </Button>

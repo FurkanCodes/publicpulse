@@ -14,7 +14,6 @@ import {
   Users,
 } from "lucide-react";
 
-import { AnimatedHeadline } from "@/components/animated-headline";
 import { FadeIn } from "@/components/fade-in";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -30,66 +29,66 @@ import {
 
 const features = [
   {
-    title: "Unified feedback inbox",
+    title: "Workspace control centre",
     description:
-      "Collect signals from portals, emails, Slack, and community channels without losing context.",
+      "Create and switch between workspaces in seconds. Every customer segment gets a focused hub without duct-taped tooling.",
     icon: Inbox,
   },
   {
-    title: "Prioritisation that scales",
+    title: "Community suggestion queue",
     description:
-      "Score opportunities across impact, effort, and customer segments to build consensus quickly.",
+      "Give customers a voice when you want it, pause submissions when you don’t. Moderate, approve, or dismiss from one queue.",
     icon: Target,
   },
   {
-    title: "Transparent roadmaps",
+    title: "Roadmap ready features",
     description:
-      "Publish real-time status updates and automatically notify subscribers when things ship.",
+      "Promote approved ideas straight into backlog items so your roadmap always reflects what’s been validated.",
     icon: Rocket,
   },
   {
-    title: "Powerful insights",
+    title: "Usage & limit visibility",
     description:
-      "Spot trends by persona, account value, or product area so PMs act on what truly matters.",
+      "Stay ahead of workspace limits with real-time counters and plan summaries baked into the dashboard.",
     icon: BarChart3,
   },
   {
-    title: "Collaborative workflows",
+    title: "Shareable workspace directory",
     description:
-      "Loop in engineering, marketing, and success with shared views and async approvals.",
+      "Copy public board links, jump into dashboards, and keep every stakeholder pointed at the right source of truth.",
     icon: Users,
   },
   {
-    title: "Enterprise safeguards",
+    title: "Owner-only safeguards",
     description:
-      "Granular permissions, audit trails, and SOC2-ready infrastructure keep data in the right hands.",
+      "Only workspace owners can change community settings or moderate feedback, protecting your roadmap from surprise edits.",
     icon: ShieldCheck,
   },
 ];
 
 const workflow = [
   {
-    title: "Capture every signal",
+    title: "Open the door",
     description:
-      "Route widget submissions, inbound email, and Slack requests into a single triage queue enriched with customer metadata.",
+      "Enable customer submissions when you’re ready for ideas and collect them in a tidy, owner-only queue.",
     icon: Sparkles,
   },
   {
-    title: "Align on what’s next",
+    title: "Review with confidence",
     description:
-      "Use impact scoring models and saved customer cohorts to prioritise outcomes, not gut feelings.",
+      "Approve great suggestions, dismiss the rest, and keep track of who asked for what without spreadsheets.",
     icon: CheckCircle2,
   },
   {
-    title: "Plan and launch",
+    title: "Promote to roadmap",
     description:
-      "Push prioritised ideas into delivery tools, track progress, and publish digestible updates as milestones are hit.",
+      "Turn an approved suggestion into a feature card instantly, ready for prioritisation and delivery.",
     icon: Rocket,
   },
   {
-    title: "Close the loop",
+    title: "Keep momentum",
     description:
-      "Automatically notify voters and champions, keeping your community engaged and your team accountable.",
+      "Monitor workspace usage, switch boards, and keep stakeholders informed without bouncing between tools.",
     icon: Bell,
   },
 ];
@@ -122,181 +121,183 @@ export default function HomePage() {
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <SiteHeader />
       <main className="flex-1">
-        <section className="relative overflow-hidden bg-background pb-24 pt-20">
-          <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.14),_transparent_65%)] dark:bg-[radial-gradient(circle_at_top,_rgba(80,99,225,0.28),_transparent_72%)]" />
-          <div className="absolute inset-x-0 top-1/3 -z-20 h-[500px] bg-[linear-gradient(180deg,rgba(59,130,246,0.12),transparent)] dark:bg-[linear-gradient(180deg,rgba(80,99,225,0.2),transparent)]" />
-          <div className="container mx-auto flex flex-col gap-16 px-4">
-            <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)]">
-              <div className="space-y-8">
+        <section className="relative overflow-hidden bg-background pb-28 pt-24">
+          <div className="absolute inset-0 -z-20">
+            <div className="absolute inset-x-0 top-[-40%] h-[520px] rounded-full bg-[radial-gradient(circle,_rgba(59,130,246,0.22),_transparent_65%)] blur-3xl dark:bg-[radial-gradient(circle,_rgba(80,99,225,0.35),_transparent_70%)]" />
+            <div className="absolute inset-x-0 bottom-[-50%] h-[420px] rounded-full bg-[radial-gradient(circle,_rgba(16,185,129,0.12),_transparent_65%)] blur-3xl dark:bg-[radial-gradient(circle,_rgba(16,185,129,0.22),_transparent_70%)]" />
+          </div>
+          <div className="container relative z-10 mx-auto flex flex-col gap-16 px-4">
+            <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)]">
+              <div className="space-y-10">
                 <FadeIn className="w-fit">
                   <Badge
                     variant="secondary"
-                    className="w-fit border border-primary/20 bg-primary/10 text-primary"
+                    className="w-fit border border-primary/30 bg-primary/10 text-primary"
                   >
-                    New: AI-assisted triage rules in beta
+                    New: interactive workspace tour now live
                   </Badge>
                 </FadeIn>
                 <FadeIn delay={120}>
-                  <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-                    Turn customer{" "}
-                    <AnimatedHeadline
-                      phrases={["feedback", "signals", "chatter", "ideas"]}
-                      className="sm:min-w-[9ch]"
-                      gradientClassName="from-primary via-[var(--accent-cyan)] to-primary/80"
-                    />{" "}
-                    into a roadmap the whole company trusts.
+                  <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-[3.75rem]">
+                    Build the roadmap{" "}
+                    <span className="bg-gradient-to-r from-primary via-[var(--accent-cyan)] to-primary/70 bg-clip-text text-transparent">
+                      your customers cheer for
+                    </span>
+                    .
                   </h1>
                 </FadeIn>
                 <FadeIn delay={220}>
                   <p className="text-balance text-lg text-muted-foreground sm:text-xl">
-                    PublicPulse unifies requests, prioritisation, and launch
-                    comms so product teams move faster with confidence—and
-                    customers see their voice reflected in every release.
+                    PublicPulse makes it effortless to collect every signal, back decisions with data,
+                    and show stakeholders the plan—in one place that feels built for momentum.
                   </p>
                 </FadeIn>
                 <FadeIn delay={320} className="flex flex-wrap items-center gap-4">
                   <Button asChild size="lg" className="gap-2">
                     <Link href="/sign-up">
-                      Start for free
+                      Start interactive tour
                       <ArrowRight className="h-4 w-4" aria-hidden />
                     </Link>
                   </Button>
                   <Button asChild size="lg" variant="outline">
-                    <Link href="/sign-in">View live workspace</Link>
+                    <Link href="/sign-in">Browse sample workspace</Link>
                   </Button>
                 </FadeIn>
-                <FadeIn
-                  delay={420}
-                  className="flex flex-wrap gap-6 text-sm text-muted-foreground"
-                >
-                  <div>
-                    <span className="text-2xl font-semibold text-foreground">
-                      12k+
-                    </span>{" "}
-                    active roadmap followers
+                <FadeIn delay={420} className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-3">
+                    <div className="flex -space-x-2">
+                      {["KT", "AL", "JD"].map((initials) => (
+                        <span
+                          key={initials}
+                          className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 bg-primary/10 text-xs font-semibold uppercase text-primary backdrop-blur"
+                        >
+                          {initials}
+                        </span>
+                      ))}
+                    </div>
+                    <div>
+                      Product teams at{" "}
+                      <span className="font-medium text-foreground">
+                        Northwind • Launchlane • StellarOps
+                      </span>{" "}
+                      ship with PublicPulse.
+                    </div>
                   </div>
-                  <div>
-                    <span className="text-2xl font-semibold text-foreground">
-                      92%
-                    </span>{" "}
-                    of launches delivered on time
+                  <div className="flex items-center gap-3">
+                    <div className="flex flex-col">
+                      <span className="text-2xl font-semibold text-foreground">12k+</span>
+                      <span className="text-xs uppercase tracking-[0.24em]">Roadmap followers</span>
+                    </div>
+                    <div className="h-10 w-px bg-border/60" />
+                    <div className="flex flex-col">
+                      <span className="text-2xl font-semibold text-foreground">92%</span>
+                      <span className="text-xs uppercase tracking-[0.24em]">On-time launches</span>
+                    </div>
                   </div>
                 </FadeIn>
               </div>
-              <FadeIn delay={200} className="h-full">
-                <Card className="relative h-full overflow-hidden border-border/60 bg-card/90 shadow-lg shadow-primary/10">
-                  <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-primary/30 to-transparent dark:from-primary/20" />
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-xl">
-                      <Sparkles className="h-5 w-5 text-primary" />
-                      Weekly Product Pulse
-                    </CardTitle>
-                    <CardDescription>
-                      An at-a-glance summary of what customers are asking for and
-                      how your roadmap is responding.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div className="rounded-lg border border-border/60 bg-background/50 px-4 py-4">
-                      <p className="text-sm uppercase tracking-wide text-muted-foreground">
-                        Top request this week
+              <FadeIn delay={240} className="relative">
+                <div className="absolute inset-0 -z-10 rounded-[40px] bg-gradient-to-br from-primary/20 via-transparent to-transparent blur-2xl" />
+                <div className="relative overflow-hidden rounded-[36px] border border-primary/25 bg-[color-mix(in_srgb,var(--surface-floating)_92%,transparent)] p-8 shadow-[0_32px_80px_rgba(15,23,42,0.36)] backdrop-blur-xl">
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2 text-sm font-semibold text-primary">
+                      <Sparkles className="h-4 w-4" aria-hidden />
+                      Product pulse
+                    </span>
+                    <Badge variant="secondary" className="border-primary/20 bg-primary/10 text-primary">
+                      Live
+                    </Badge>
+                  </div>
+                  <div className="mt-6 space-y-5">
+                    <div className="rounded-2xl border border-border/60 bg-background/70 p-4">
+                      <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">
+                        Up next
                       </p>
-                      <h3 className="mt-2 text-lg font-semibold">
+                      <h3 className="mt-3 text-lg font-semibold text-foreground">
                         Advanced admin roles
                       </h3>
-                      <p className="text-sm text-muted-foreground">
-                        64 enterprise accounts requested finer permission
-                        controls. Scheduled for Q3 release.
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        64 enterprise accounts asked for finer permissions. Scheduled for a Q3 launch with early access invites going out now.
                       </p>
                     </div>
                     <div className="grid gap-4 sm:grid-cols-2">
-                      <div className="rounded-lg border border-border/60 bg-background/50 p-4">
-                        <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                      <div className="rounded-2xl border border-border/60 bg-background/60 p-4">
+                        <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">
                           Feedback processed
                         </p>
-                        <p className="mt-2 text-2xl font-semibold text-foreground">
-                          1,248
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          32% faster than previous sprint.
-                        </p>
+                        <p className="mt-3 text-2xl font-semibold text-foreground">1,248</p>
+                        <p className="text-xs text-muted-foreground">32% faster than last sprint.</p>
                       </div>
-                      <div className="rounded-lg border border-border/60 bg-background/50 p-4">
-                        <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                          Customer sentiment
+                      <div className="rounded-2xl border border-border/60 bg-background/60 p-4">
+                        <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">
+                          Sentiment lift
                         </p>
-                        <p className="mt-2 text-2xl font-semibold text-foreground">
-                          +18
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          Net promoter score from latest launch.
-                        </p>
+                        <p className="mt-3 text-2xl font-semibold text-foreground">+18</p>
+                        <p className="text-xs text-muted-foreground">NPS change post-launch.</p>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between rounded-lg border border-border/60 bg-background/50 px-4 py-3 text-sm">
-                      <span className="font-medium text-foreground">
-                        145 subscribers notified
-                      </span>
-                      <Button size="sm" variant="secondary">
-                        View timeline
-                      </Button>
+                    <div className="space-y-3 rounded-2xl border border-border/60 bg-background/60 p-4">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="font-medium text-foreground">145 champions notified</span>
+                        <Button size="sm" variant="secondary">
+                          View timeline
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between rounded-xl border border-dashed border-border/60 bg-background/40 px-4 py-3 text-xs text-muted-foreground">
+                        <span className="uppercase tracking-[0.24em]">Signal surge</span>
+                        <span className="font-medium text-primary">+38% week over week</span>
+                      </div>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </FadeIn>
             </div>
             <FadeIn
-              delay={480}
-              className="flex flex-wrap items-center gap-8 text-sm text-muted-foreground"
+              delay={520}
+              className="flex flex-wrap items-center gap-8 rounded-2xl border border-border/40 bg-background/80 px-6 py-4 text-sm text-muted-foreground backdrop-blur"
             >
-              <span className="uppercase tracking-wide text-xs">
-                Trusted by customer-first teams at
+              <span className="uppercase tracking-[0.24em] text-xs">
+                Teams exploring PublicPulse today
               </span>
-              <div className="flex flex-wrap gap-6">
-                {["Northwind Labs", "Acme SaaS", "Launchlane", "Brightside"].map(
-                  (company) => (
-                    <span
-                      key={company}
-                      className="font-medium text-foreground/80 dark:text-foreground/70"
-                    >
-                      {company}
-                    </span>
-                  ),
-                )}
+              <div className="flex flex-wrap gap-x-8 gap-y-3 font-medium text-foreground/80 dark:text-foreground/70">
+                {["Northwind Labs", "Acme SaaS", "Launchlane", "Brightside", "OrbitAI"].map((company) => (
+                  <span key={company}>{company}</span>
+                ))}
               </div>
             </FadeIn>
           </div>
         </section>
 
         <section id="features" className="container mx-auto px-4 py-24">
-          <div className="mx-auto max-w-2xl text-center">
+          <div className="mx-auto max-w-3xl text-center">
             <Badge variant="outline" className="mb-4 border-primary/30 text-primary">
-              Why teams switch to PublicPulse
+              What you’ll explore inside PublicPulse
             </Badge>
             <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              Everything you need to champion customer-led roadmaps.
+              Every signal, priority, and launch update in one clear workspace.
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Replace scattered spreadsheets and forms with a shared system that
-              keeps product, success, and engineering in lockstep.
+              Step through the live tour to see how feedback routes in, decisions get made,
+              and customers stay in the loop—without spreadsheets or guesswork.
             </p>
           </div>
           <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {features.map((feature, index) => (
-              <FadeIn key={feature.title} delay={index * 80}>
-                <Card className="border-border/60 bg-card/60 transition-transform hover:-translate-y-1 hover:border-primary/40">
-                  <CardHeader>
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <FadeIn key={feature.title} delay={index * 90}>
+                <div className="group relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-border/40 bg-gradient-to-br from-background/70 via-background to-background/60 p-6 shadow-[0_18px_40px_rgba(15,23,42,0.12)] transition-transform duration-200 ease-out hover:-translate-y-1">
+                  <div className="space-y-4">
+                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/12 text-primary shadow-[0_8px_16px_rgba(59,130,246,0.16)]">
                       <feature.icon className="h-5 w-5" aria-hidden />
                     </span>
-                    <CardTitle className="mt-4 text-xl">
-                      {feature.title}
-                    </CardTitle>
-                    <CardDescription className="text-sm text-muted-foreground">
-                      {feature.description}
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
+                    <h3 className="text-xl font-semibold text-foreground">{feature.title}</h3>
+                    <p className="text-sm text-muted-foreground">{feature.description}</p>
+                  </div>
+                  <span className="mt-6 flex items-center gap-2 text-sm font-semibold text-primary">
+                    Explore in tour
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" aria-hidden />
+                  </span>
+                  <div className="absolute inset-x-0 bottom-0 h-20 translate-y-10 rounded-full bg-gradient-to-t from-primary/10 to-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
+                </div>
               </FadeIn>
             ))}
           </div>

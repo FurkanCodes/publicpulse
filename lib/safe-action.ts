@@ -4,6 +4,7 @@ import { createSafeActionClient } from "next-safe-action";
 import { auth } from "@/lib/auth";
 
 export const actionClient = createSafeActionClient({
+  defaultValidationErrorsShape: "flattened",
   handleServerError(error) {
     console.error("[safe-action] server error", error);
     if (error instanceof Error && error.message) {

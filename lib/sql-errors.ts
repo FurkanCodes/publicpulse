@@ -1,12 +1,19 @@
-export function isUniqueViolation(error: unknown): boolean {
-  if (
-    error &&
-    typeof error === "object" &&
-    "code" in error &&
-    typeof (error as { code?: string }).code === "string"
-  ) {
-    return (error as { code: string }).code === "23505";
+function extractSqlErrorCode(error: unknown): string | undefined {
+  if (!error || typeof error !== "object") {
+    return undefined;
   }
 
-  return false;
+  if ("code" in error && typeof (error as { code?: string }).code === "string") {
+    return (error as { code: string }).code;
+  }
+
+  if ("cause" in error) {
+    return extractSqlErrorCode((error as { cause?: unknown }).cause);
+  }
+
+  return undefined;
+}
+
+export function isUniqueViolation(error: unknown): boolean {
+  return extractSqlErrorCode(error) === "23505";
 }

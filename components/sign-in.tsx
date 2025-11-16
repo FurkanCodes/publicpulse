@@ -65,7 +65,7 @@ export default function SignIn() {
           onRequest: () => setAuthLoading(true),
           onResponse: () => setAuthLoading(false),
         
-          onSuccess: () => router.push("/dashboard"),
+          onSuccess: () => router.push("/dashboard/overview"),
         },
       );
     } catch (error) {
@@ -80,7 +80,7 @@ export default function SignIn() {
       await signIn.social(
         {
           provider,
-          callbackURL: "/dashboard",
+          callbackURL: "/dashboard/overview",
         },
         {
           onRequest: () => setSocialLoading(provider),

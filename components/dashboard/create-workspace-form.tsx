@@ -48,31 +48,29 @@ export function CreateWorkspaceForm({
     onSuccess({ data }) {
       if (!data) return;
 
+      if ("error" in data) {
+        const limitError = data.error;
+        if (limitError?.kind === "plan-limit") {
+          setLimitMessage(limitError.message);
+          toast.error(limitError.message);
+          router.refresh();
+        }
+        return;
+      }
+
+      if (!("company" in data)) {
+        return;
+      }
+
       setLimitMessage(null);
       formRef.current?.reset();
       toast.success(`Created ${data.company.name}.`);
       router.refresh();
     },
     onError({ error }) {
-      const limitError =
-        error?.data && "error" in error.data
-          ? (error.data.error as {
-              kind: string;
-              message: string;
-              usage?: { current: number; limit: number | null };
-            })
-          : null;
-
-      if (limitError?.kind === "plan-limit") {
-        setLimitMessage(limitError.message);
-        toast.error(limitError.message);
-        router.refresh();
-        return;
-      }
-
       const message =
-        error?.serverError ??
         error?.thrownError?.message ??
+        error?.serverError ??
         "We couldn’t create that workspace.";
       toast.error(message);
     },

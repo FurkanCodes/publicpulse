@@ -61,8 +61,8 @@ export const updateCommunitySettingsAction = authenticatedAction
       maxPublicSuggestionsPerUser: sanitizedMax,
     });
 
-    revalidatePath("/dashboard/settings");
-    revalidatePath("/dashboard");
+    revalidatePath("/dashboard/workspaces");
+    revalidatePath("/dashboard/overview");
 
     return {
       settings,
@@ -128,8 +128,8 @@ export const moderateSuggestionAction = authenticatedAction
       resolutionNote: note,
     });
 
-    revalidatePath("/dashboard/settings");
-    revalidatePath("/dashboard");
+    revalidatePath("/dashboard/workspaces");
+    revalidatePath("/dashboard/overview");
 
     return {
       suggestion: updated,

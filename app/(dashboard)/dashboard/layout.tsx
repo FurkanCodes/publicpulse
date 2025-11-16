@@ -16,9 +16,9 @@ import { SignOutButton } from "@/components/sign-out-button";
 import { WorkspaceSwitcher } from "@/components/dashboard/workspace-switcher";
 
 const navigation: NavItem[] = [
-  { name: "Overview", href: "/dashboard", icon: "overview" },
+  { name: "Overview", href: "/dashboard/overview", icon: "overview" },
   { name: "Features", href: "/dashboard/features", icon: "features" },
-  { name: "Feedback", href: "/dashboard/feedback", icon: "feedback" },
+  { name: "Workspaces", href: "/dashboard/workspaces", icon: "workspaces" },
   { name: "Settings", href: "/dashboard/settings", icon: "settings" },
 ];
 
@@ -32,7 +32,7 @@ export default async function DashboardLayout({
   });
 
   if (!session?.user) {
-    const next = encodeURIComponent("/dashboard");
+    const next = encodeURIComponent("/dashboard/overview");
     redirect(`/sign-in?redirectTo=${next}`);
   }
 
@@ -100,7 +100,7 @@ export default async function DashboardLayout({
                     {remainingLabel}
                   </span>
                   <Link
-                    href="/dashboard/settings#upgrade"
+                    href="/dashboard/workspaces#plan"
                     className="text-xs font-semibold text-primary underline-offset-4 hover:underline"
                   >
                     Manage plan

@@ -2,17 +2,11 @@
 
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
-import {
-  LayoutDashboard,
-  MessageSquare,
-  Settings,
-  Sparkles,
-  type LucideIcon,
-} from "lucide-react";
+import { Briefcase, LayoutDashboard, Settings, Sparkles, type LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-type NavIcon = "overview" | "features" | "feedback" | "settings";
+type NavIcon = "overview" | "features" | "workspaces" | "settings";
 
 export type NavItem = {
   name: string;
@@ -27,7 +21,7 @@ type DashboardNavProps = {
 const iconMap: Record<NavIcon, LucideIcon> = {
   overview: LayoutDashboard,
   features: Sparkles,
-  feedback: MessageSquare,
+  workspaces: Briefcase,
   settings: Settings,
 };
 
@@ -39,9 +33,10 @@ export function DashboardNav({ items }: DashboardNavProps) {
       {items.map((item) => {
         const Icon = iconMap[item.icon];
 
-        const isActive =
-          segments[0] === item.href.replace("/dashboard", "").slice(1) ||
-          (item.href === "/dashboard" && segments.length === 0);
+        const [, targetSegment = ""] = item.href.split("/").filter(Boolean);
+        const isActive = targetSegment
+          ? segments[0] === targetSegment
+          : segments.length === 0;
 
         return (
           <Link

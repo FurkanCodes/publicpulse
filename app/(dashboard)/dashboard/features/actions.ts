@@ -33,7 +33,7 @@ export const createFeatureAction = authenticatedAction
     });
 
     revalidatePath("/dashboard/features");
-    revalidatePath("/dashboard");
+    revalidatePath("/dashboard/overview");
 
     return {
       feature,

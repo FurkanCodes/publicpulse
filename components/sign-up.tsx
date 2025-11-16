@@ -128,13 +128,13 @@ export default function SignUp() {
           password: values.password,
           name: fullName,
           image: imageBase64,
-          callbackURL: "/dashboard",
+          callbackURL: "/dashboard/overview",
         },
         {
           onRequest: () => setLoading(true),
           onResponse: () => setLoading(false),
              onError: (ctx) => { toast.error(ctx.error.message); },
-          onSuccess: () => router.push("/dashboard"),
+          onSuccess: () => router.push("/dashboard/overview"),
         }
       );
     } catch (error) {

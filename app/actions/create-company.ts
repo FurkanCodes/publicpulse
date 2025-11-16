@@ -22,7 +22,8 @@ export const createCompanyAction = authenticatedAction
         parsedInput,
       );
 
-      revalidatePath("/dashboard");
+      revalidatePath("/dashboard/overview");
+      revalidatePath("/dashboard/workspaces");
       revalidatePath("/dashboard/settings");
 
       return {

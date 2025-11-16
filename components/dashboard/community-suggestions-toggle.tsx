@@ -120,7 +120,7 @@ export function CommunitySuggestionsToggle({
               your public board.
             </span>
             <Button asChild size="sm" variant="outline">
-              <Link href="/dashboard/settings#upgrade">See community plans</Link>
+              <Link href="/dashboard/workspaces#plan">See community plans</Link>
             </Button>
           </div>
         </div>
